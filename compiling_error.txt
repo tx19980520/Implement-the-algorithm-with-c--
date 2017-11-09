@@ -1,0 +1,2 @@
+c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../../mingw32/bin/ld.exe: cannot open output file C:\Users\lenovo\AppData\Local\Temp\Tarjan.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
