@@ -8,13 +8,24 @@ int *now_in;
 int *had_in;
 int *step;
 int *deep;
+int *visit;
 int count = 0;
+bool visitall()
+{
+  for(int i=1;i<=n;++i)
+  {
+    if(visit[i] !=1)
+    return false;
+  }
+  return true;
+}
 void dfs(int index)
 {
   count += 1;
   step[index] = count;
   deep[index] = step[index];
   now_in[index] = 1;
+  visit[index] = 1;
   s.push(index);
   for(int i=1;i <= n; ++i)
   {
@@ -32,7 +43,7 @@ void dfs(int index)
   }
   if(deep[index] == step[index])//根据画图的得到的经验是，pop到该元素出栈为止
   {
-    cout<< "a stronglyu connected component:" << endl;
+    cout<< "a strongly connected component:" << endl;
     while(s.top() != index)
     {
         int tmp = s.top();
@@ -42,7 +53,7 @@ void dfs(int index)
         now_in[tmp] = 0;
     }
     int tmp = s.top();
-    cout << tmp << "  ";
+    cout << tmp << "  " << endl;
     s.pop();
     had_in[tmp] = 1;
     now_in[tmp] = 0;
@@ -53,6 +64,7 @@ int main()
 {
   cout << "input the num"<<endl;
   cin >> n;
+  visit = new int [n+1];
   step = new int [n+1];
   now_in = new int [n+1];
   deep = new int [n+1];
@@ -68,6 +80,7 @@ int main()
   for(int i=1;i<=n;++i)
   {
     re[i] = new int [n+1];
+    visit[i] = 0;
   }
   for(int i=1;i<=n;++i)
   {
@@ -84,6 +97,15 @@ int main()
   		cin >> re[i][j];
 	}
   }
-  dfs(1);
+  int tmp;
+  while(!visitall())
+  {
+    for(int i=1;i<=n;++i)
+    {
+      if(visit[i] == 0)
+      tmp = i;
+    }
+    dfs(tmp);
+  }
   return 0;
 }
